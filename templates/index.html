@@ -4,10 +4,117 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="{{ url_for('static', 'js/index.js') }}" defer></script>
+    <!-- <script src="{{ url_for('static', filename='js/index.js') }}" defer></script> -->
+    <script src="{{ url_for('static', filename='js/jQuery.js') }}" ></script>
+    <script defer>
+class HtmlElementGenerator{
+    // Html 요소 생성을 도와주는 클래스
+    constructor (htmlBase) {
+        // htmlBase에는 기초가 될 html 코드를 작성합니다.
+        this.htmlBase = htmlBase;
+        this.baseArgs = [];
+    } 
+
+    getHtmlCode(baseArgs) {
+        if (baseArgs === []) {
+            return;
+        }
+        
+        var to_return = this.htmlBase
+        baseArgs.forEach((element, idx) => {
+            to_return = to_return.replace("{" + idx + "}", String(element));
+        });
+
+        return to_return;
+    }
+}
+function random(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function assign(names, roles)
+{
+    var shuffled = [];
+    var result = new Map();
+
+    for (var i = 0; i < names.length; i++) {
+        var idx = random(0, roles.length - 1);
+        
+        while (shuffled.includes(roles[idx]))
+        {
+            idx = random(0, roles.length - 1);
+        }
+
+        shuffled.push(roles[idx]);
+
+    }
+
+    for (var i = 0; i < names.length; i++)
+    {
+        result[names[i]] = shuffled[i];
+    }
+
+    return result;
+}
+
+function add_element(selector, html_content)
+{
+    const prev_content = $(selector).html();
+    $(selector).html(prev_content + html_content);
+}
+
+const nameElementGenerator = new HtmlElementGenerator('<div>{0}<button onclick="{1}">x</button></div>');
+
+
+
+function add_name() {
+    var to_add = nameElementGenerator.getHtmlCode([$("#main #name_div input").val(),
+    "$(0).remove('this')"]);
+    
+    add_element("#main #name_div #elements_list", to_add);
+}
+
+
+
+    </script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <title>뽑기</title>
 </head>
 <body>
-    <h1>Hello World!</h1>
+    <div id="home">
+        <div id="header">
+            <h1>이름과 역할을 설정하세요.</h1>
+        </div>
+        <div id="main">
+            <div id="name_div">
+                <input>
+                <button id="add" onclick="add_name()">+</button>
+                <div id="elements_list">
+
+                </div>
+            </div>
+            <div id="role_div">
+                <input>
+                <button id="add">+</button>
+                <ul>
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+        <div id="footer">
+
+        </div>
+    </div>
+    <div id="result" style="display: none;">
+        <div id="header">
+
+        </div>
+        <div id="main">
+
+        </div>
+        <div id="footer">
+            
+        </div>
+    </div>
 </body>
-</html> 
+</html>

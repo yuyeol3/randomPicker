@@ -1,3 +1,24 @@
+class HtmlElementGenerator{
+    // Html 요소 생성을 도와주는 클래스
+    constructor (htmlBase) {
+        // htmlBase에는 기초가 될 html 코드를 작성합니다.
+        this.htmlBase = htmlBase;
+        this.baseArgs = [];
+    } 
+
+    getHtmlCode(baseArgs) {
+        if (baseArgs === []) {
+            return;
+        }
+        
+        var to_return = this.htmlBase
+        baseArgs.forEach((element, idx) => {
+            to_return = to_return.replace("{" + idx + "}", String(element));
+        });
+
+        return to_return;
+    }
+}
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -27,4 +48,11 @@ function assign(names, roles)
     return result;
 }
 
-console.log(assign(["김공군", "이필승", "박정예"], ["폰생", "쓰", "차"]))
+function add_element(selector, html_content)
+{
+    const prev_content = $(selector).html();
+    $(selector).html(prev_content + html_content);
+}
+
+const nameElementGenerator = new HtmlElementGenerator("<div>{0}<button>+</button></div>");
+
