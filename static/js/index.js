@@ -56,3 +56,4 @@ function add_element(selector, html_content)
 
 const nameElementGenerator = new HtmlElementGenerator("<div>{0}<button>+</button></div>");
 
+console.log(assign(["김공군", "이필승", "박정예"], ["폰생", "쓰청", "통과"]))

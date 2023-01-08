@@ -31,3 +31,25 @@
     width: 100vw;
     height: 80vh;
 }
+
+#name_div, #role_div {
+    width: 85%;
+    height: 45%;
+    margin: 0 auto;
+}
+
+.add-input {
+    border-radius: 0;
+    border-width: 1px;
+    width: 90%;
+    height: 30px;
+    margin: 0; padding: 0;
+}
+
+.add-button {
+    border-radius: 0;
+    border-width: 1px;
+    width: 7%;
+    height: 32px;
+    margin: 0; padding: 0;
+}

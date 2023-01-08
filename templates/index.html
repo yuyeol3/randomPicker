@@ -8,6 +8,14 @@
     <script src="{{ url_for('static', filename='js/jQuery.js') }}" ></script>
     <script defer>
 
+// 지정한 html selector에 html content를 추가하는 함수
+function add_element(selector, html_content)
+{
+    var prev_content = $(selector).html();
+    $(selector).html(prev_content + html_content);
+}
+
+
 // Html 요소 생성을 도와주는 클래스
 class HtmlElementGenerator{
     // htmlBase에는 기초가 될 html 코드를 작성합니다.
@@ -30,6 +38,38 @@ class HtmlElementGenerator{
         return to_return;
     }
 }
+
+class ElementList {
+    constructor (selector, generator) {
+        this.selector = selector;
+        this.elements = [];
+        this.generator = generator;
+    }
+
+    push (to_add) {
+        this.elements.push(to_add);
+    }
+
+    remove (index) {
+        this.elements.splice(index, 1);
+    }
+
+    render () {
+        $(this.selector).html("");
+
+        this.elements.forEach((e, i) => {
+            var htmlCode = this.generator.getHtmlCode([i, e, i]);
+            add_element(this.selector, htmlCode);
+        });
+    }
+
+    getElements () {
+        return this.elements;
+    }
+
+}
+
+
 
 // [min, max]의 범위에서 무작위한 수를 리턴하는 함수
 function random(min, max) {
@@ -62,25 +102,29 @@ function assign_roles(names, roles)
     return result;
 }
 
-// 지정한 html selector에 html content를 추가하는 함수
-function add_element(selector, html_content)
-{
-    const prev_content = $(selector).html();
-    $(selector).html(prev_content + html_content);
-}
 
 
-const nameElementGenerator = new HtmlElementGenerator('<div>{0}<button onclick="{1}">x</button></div>');
-
-
-
+const nameElementGenerator = new HtmlElementGenerator(
+    '<div class="element" id="{0}">{1}<button onclick="(() => {names.remove({2}); names.render();})()">x</button></div>'
+);
+const names = new ElementList("#home #main #name_div #elements_list", nameElementGenerator);
 function add_name() {
-    var to_add = nameElementGenerator.getHtmlCode([$("#main #name_div input").val(),
-    "$(0).remove('this')"]);
-    
-    add_element("#main #name_div #elements_list", to_add);
+    names.push($("#home #main #name_div input").val());
+    names.render();
+    $("#home #main #name_div input").val("");
+
 }
 
+const roleElementGenerator = new HtmlElementGenerator(
+    '<div class="element" id="{0}">{1}<button onclick="(() => {roles.remove({2}); roles.render();})()">x</button></div>'
+);
+
+const roles = new ElementList("#home #main #role_div #elements_list", roleElementGenerator);
+function add_role() {
+    roles.push($("#home #main #role_div input").val());
+    roles.render();
+    $("#home #main #role_div input").val("");
+}
 
 
     </script>
@@ -94,22 +138,18 @@ function add_name() {
         </div>
         <div id="main">
             <div id="name_div">
-                <input>
-                <button id="add" onclick="add_name()">+</button>
-                <div id="elements_list">
-
-                </div>
+                <input class="add-input">
+                <button class="add-button" id="add" onclick="add_name()">+</button>
+                <div id="elements_list"></div>
             </div>
             <div id="role_div">
-                <input>
-                <button id="add">+</button>
-                <ul>
-                    <li></li>
-                </ul>
+                <input class="add-input">
+                <button class="add-button" id="add" onclick="add_role()">+</button>
+                <div id="elements_list"></div>
             </div>
         </div>
         <div id="footer">
-
+            <button>다음</button>
         </div>
     </div>
     <div id="result" style="display: none;">
