@@ -1,4 +1,28 @@
-#home {
+
+/* 폰트 불러오기 */
+@font-face {
+    font-family: 'ROKAFSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts2201-3@1.0/ROKAFSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ROKAFSansBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts2201-3@1.0/ROKAFSansBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+ 
+h1, h2, h3 {
+    font-family: 'ROKAFSansBold';
+}
+
+p {
+    font-family: 'ROKAFSansMedium';
+}
+
+.page_div {
     position: fixed;
     top: 0;
     left: 0;
@@ -8,7 +32,8 @@
     height: 100vh;
 }
 
-#home #header {
+
+.header {
     position: fixed;
     top: 0;
     left: 0;
@@ -18,11 +43,7 @@
     height: 10vh; 
 }
 
-#home #header h1 {
-    text-align: center;
-}
-
-#home #main {
+.main {
     position: fixed;
     top: 10vh;
     left: 0;
@@ -32,24 +53,130 @@
     height: 80vh;
 }
 
+.footer {
+    position: fixed;
+    /* top: 90vh; */
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 60px;
+}
+
+#home #header h1 {
+    text-align: center;
+    font-family:'ROKAFSansBold';
+    font-size: calc(100vw / 16);
+}
+
 #name_div, #role_div {
     width: 85%;
     height: 45%;
     margin: 0 auto;
 }
 
-.add-input {
-    border-radius: 0;
-    border-width: 1px;
-    width: 90%;
-    height: 30px;
+.elements_list {
+    height: calc(100% - 100px);
+    overflow-y: scroll;
+}
+
+
+.add_input {
+    border-radius: 10vw;
+    border-width: 0;
+    background-color: hsl(0, 0%, 93%);
+    width: 86%;
+    height: 40px;
     margin: 0; padding: 0;
 }
 
-.add-button {
-    border-radius: 0;
-    border-width: 1px;
-    width: 7%;
-    height: 32px;
+.add_button {
+    border-radius: 20px;
+    border-width: 0;
+    background-color: hwb(240 28% 0%);
+    font-family:'ROKAFSansMedium';
+    font-size: 20px;
+    color: white;
+    width: 12%;
+    height: 42px;
     margin: 0; padding: 0;
+}
+
+.buttons_div {
+    width: 80%;
+    margin: 10px auto 10px auto;
+}
+
+.action_button {
+    background-color: hwb(240 28% 0%);
+    color: white;
+    border-width: 0;
+    font-family:'ROKAFSansMedium';
+    font-size: 15px;
+    width: 48%;
+    height: 40px;
+    border-radius: 20px;
+}
+
+._left {
+    margin-right: 2%;
+}
+
+._right {
+    margin-left: 2%;
+}
+
+.element {
+    margin: 10px 0;
+    height: 40px;
+}
+
+.element_text {
+    display: inline-block;
+    width: 89%;
+    height: 100%;
+    margin: 0; padding: 0;
+    font-size: 20px;
+}
+
+.element_button {
+    border-radius: 20px;
+    border-width: 0;
+    /* font-family:'ROKAFSansMedium'; */
+    font-size: 20px;
+    color: black;
+    width: 10%;
+    height: 95%;
+    margin: 0; padding: 0;
+}
+
+
+
+/* 화면 가로폭 500부터 적용 */
+@media ( min-width: 500px ) {
+    #home #header h1 {
+        font-size: 30px;
+    }
+
+    
+}
+
+/* 화면 가로폭 1024부터 적용 */
+@media ( min-width: 1024px ) {
+    #home #header h1 {
+        font-size: 30px;
+    }
+
+    #name_div, #role_div {
+        float: left;
+        width: 40%;
+        height: 90%;
+        margin: 0 5% 0 5%;
+    }
+
+    .buttons_div {
+        width: 50%;
+    }
+    
 }

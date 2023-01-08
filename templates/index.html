@@ -8,6 +8,7 @@
     <script src="{{ url_for('static', filename='js/jQuery.js') }}" ></script>
     <script defer>
 
+
 // 지정한 html selector에 html content를 추가하는 함수
 function add_element(selector, html_content)
 {
@@ -17,7 +18,7 @@ function add_element(selector, html_content)
 
 
 // Html 요소 생성을 도와주는 클래스
-class HtmlElementGenerator{
+class HtmlElementGenerator {
     // htmlBase에는 기초가 될 html 코드를 작성합니다.
     constructor (htmlBase) {
         this.htmlBase = htmlBase;
@@ -69,8 +70,6 @@ class ElementList {
 
 }
 
-
-
 // [min, max]의 범위에서 무작위한 수를 리턴하는 함수
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -105,23 +104,38 @@ function assign_roles(names, roles)
 
 
 const nameElementGenerator = new HtmlElementGenerator(
-    '<div class="element" id="{0}">{1}<button onclick="(() => {names.remove({2}); names.render();})()">x</button></div>'
+    '<div class="element" id="{0}">' + 
+        '<p class="element_text">㏅ {1}</p><button class="element_button" onclick="(() => {names.remove({2}); names.render();})()">×</button>' + 
+    '</div>'
 );
 const names = new ElementList("#home #main #name_div #elements_list", nameElementGenerator);
 function add_name() {
-    names.push($("#home #main #name_div input").val());
+    var to_add = $("#home #main #name_div input").val();
+
+    if (to_add === '') {
+        return;
+    }
+    names.push(to_add);
     names.render();
     $("#home #main #name_div input").val("");
 
 }
 
 const roleElementGenerator = new HtmlElementGenerator(
-    '<div class="element" id="{0}">{1}<button onclick="(() => {roles.remove({2}); roles.render();})()">x</button></div>'
+    '<div class="element" id="{0}">' + 
+        '<p class="element_text">⒡ {1}</p><button class="element_button" onclick="(() => {roles.remove({2}); roles.render();})()">×</button>' + 
+    '</div>'
 );
 
 const roles = new ElementList("#home #main #role_div #elements_list", roleElementGenerator);
 function add_role() {
-    roles.push($("#home #main #role_div input").val());
+    var to_add = $("#home #main #role_div input").val();
+
+    if (to_add === '') {
+        return;
+    }
+
+    roles.push(to_add);
     roles.render();
     $("#home #main #role_div input").val("");
 }
@@ -132,34 +146,40 @@ function add_role() {
     <title>뽑기</title>
 </head>
 <body>
-    <div id="home">
-        <div id="header">
-            <h1>이름과 역할을 설정하세요.</h1>
+    <!-- 메인 페이지 -->
+    <div id="home" class="page_div">
+        <div id="header" class="header">
+            <h1>⊆ 이름과 역할을 설정하세요</h1>
         </div>
-        <div id="main">
+        <div id="main" class="main">
             <div id="name_div">
-                <input class="add-input">
-                <button class="add-button" id="add" onclick="add_name()">+</button>
-                <div id="elements_list"></div>
+                <h3>이름</h3>
+                <input class="add_input" >
+                <button class="add_button" id="add" onclick="add_name()">+</button>
+                <div id="elements_list" class="elements_list"></div>
             </div>
             <div id="role_div">
-                <input class="add-input">
-                <button class="add-button" id="add" onclick="add_role()">+</button>
-                <div id="elements_list"></div>
+                <h3>역할</h3>
+                <input class="add_input" onchange="add_role()">
+                <button class="add_button" id="add" onclick="add_role()">+</button>
+                <div id="elements_list" class="elements_list"></div>
             </div>
         </div>
-        <div id="footer">
-            <button>다음</button>
+        <div id="footer" class="footer">
+            <div id="buttons_div" class="buttons_div">
+                <button class="action_button _left">초기화</button><button class="action_button _right">다음</button>
+            </div>
         </div>
     </div>
-    <div id="result" style="display: none;">
-        <div id="header">
+    <!-- 결과 페이지 -->
+    <div id="result" class="page_div" style="display: none;">
+        <div id="header" class="header">
 
         </div>
-        <div id="main">
+        <div id="main" class="main">
 
         </div>
-        <div id="footer">
+        <div id="footer" class="footer">
             
         </div>
     </div>
