@@ -55,6 +55,10 @@ class ElementList {
         this.elements.splice(index, 1);
     }
 
+    removeAll () {
+        this.elements = [];
+    }
+
     render () {
         $(this.selector).html("");
 
@@ -78,24 +82,26 @@ function random(min, max) {
 // roles를 무작위로 names에 할당하는 함수
 function assign_roles(names, roles)
 {
+    
+    var used_idx = [];
     var shuffled = [];
     var result = new Map();
 
     for (var i = 0; i < names.length; i++) {
         var idx = random(0, roles.length - 1);
         
-        while (shuffled.includes(roles[idx]))
+        while (used_idx.includes(idx))
         {
             idx = random(0, roles.length - 1);
         }
 
         shuffled.push(roles[idx]);
-
+        used_idx.push(idx);
     }
 
     for (var i = 0; i < names.length; i++)
     {
-        result[names[i]] = shuffled[i];
+        result.set(names[i], shuffled[i]);
     }
 
     return result;
@@ -140,6 +146,51 @@ function add_role() {
     $("#home #main #role_div input").val("");
 }
 
+function resetAll() {
+    names.removeAll();
+    roles.removeAll();
+    $("#home #main #name_div input").val("");
+    $("#home #main #role_div input").val("");
+    names.render();
+    roles.render();
+}
+
+var isMainPage = true;
+
+
+function changePage() {
+    if (isMainPage) {
+        // 메인페이지 > 결과페이지
+        showResult();
+        $("#home").attr("style", "display: none");
+        $("#result").attr("style", "")
+    } else {
+        // 결과페이지 > 메인페이지
+        $("#result_table").html("")
+        $("#home").attr("style", "");
+        $("#result").attr("style", "display: none")
+    }
+
+    isMainPage = !isMainPage;
+}
+
+function showResult() {
+    var res = assign_roles(names.getElements(), roles.getElements());
+    console.log(res.size);
+    const tableGenerator = new HtmlElementGenerator(
+        '<tr>' +
+            '<td class="res_name">㏅ {0}</td>' +
+            '<td class="res_blank">></td>' +
+            '<td class="res_role">⒡ {1}</td>' +
+        '</tr>'
+    );
+
+
+    res.forEach((val, key) => {
+        add_element("#result_table", tableGenerator.getHtmlCode([key, val]));
+    });
+}
+
 
     </script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
@@ -154,33 +205,39 @@ function add_role() {
         <div id="main" class="main">
             <div id="name_div">
                 <h3>이름</h3>
-                <input class="add_input" >
+                <input class="add_input" onkeypress="if(window.event.keyCode == 13){ add_name() }">
                 <button class="add_button" id="add" onclick="add_name()">+</button>
                 <div id="elements_list" class="elements_list"></div>
             </div>
             <div id="role_div">
                 <h3>역할</h3>
-                <input class="add_input" onchange="add_role()">
+                <input class="add_input" onkeypress="if(window.event.keyCode == 13){ add_role() }">
                 <button class="add_button" id="add" onclick="add_role()">+</button>
                 <div id="elements_list" class="elements_list"></div>
             </div>
         </div>
         <div id="footer" class="footer">
             <div id="buttons_div" class="buttons_div">
-                <button class="action_button _left">초기화</button><button class="action_button _right">다음</button>
+                <button class="action_button _left" onclick="resetAll()">㎱ 초기화</button><button class="action_button _right" onclick="changePage()">다음</button>
             </div>
         </div>
     </div>
     <!-- 결과 페이지 -->
     <div id="result" class="page_div" style="display: none;">
         <div id="header" class="header">
-
+            <h1>㏊ 결과를 확인하세요</h1>
         </div>
         <div id="main" class="main">
-
+            <div id="result_div">
+                <h2>결과</h2>
+                <table id="result_table"></table>
+            </div>
         </div>
         <div id="footer" class="footer">
-            
+            <div id="buttons_div" class="buttons_div">
+                <button class="action_button _full" onclick="changePage()">다시하기</button>
+                <!-- <button class="action_button _right" >공유</button> -->
+            </div>
         </div>
     </div>
 </body>

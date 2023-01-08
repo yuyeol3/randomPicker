@@ -64,7 +64,7 @@ p {
     height: 60px;
 }
 
-#home #header h1 {
+#header h1 {
     text-align: center;
     font-family:'ROKAFSansBold';
     font-size: calc(100vw / 16);
@@ -74,6 +74,17 @@ p {
     width: 85%;
     height: 45%;
     margin: 0 auto;
+}
+
+#result_div {
+    width: 80%;
+    height: 100%;
+    margin: 0 auto;
+    overflow-y: scroll;
+}
+
+#result_table {
+    width: 100%;
 }
 
 .elements_list {
@@ -127,6 +138,10 @@ p {
     margin-left: 2%;
 }
 
+._full {
+    width: 100%;
+}
+
 .element {
     margin: 10px 0;
     height: 40px;
@@ -151,11 +166,23 @@ p {
     margin: 0; padding: 0;
 }
 
+.res_name, .res_role, .res_blank {
+    font-family: 'ROKAFSansMedium';
+    text-align: center;
+    font-size: 24px;
+}
 
+.res_name, .res_role {
+    width: 40%;
+}
+
+.res_blank {
+    width: 20%;
+}
 
 /* 화면 가로폭 500부터 적용 */
 @media ( min-width: 500px ) {
-    #home #header h1 {
+    #header h1 {
         font-size: 30px;
     }
 
@@ -164,7 +191,7 @@ p {
 
 /* 화면 가로폭 1024부터 적용 */
 @media ( min-width: 1024px ) {
-    #home #header h1 {
+    #header h1 {
         font-size: 30px;
     }
 
