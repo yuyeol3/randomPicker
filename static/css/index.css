@@ -54,7 +54,7 @@ p {
 }
 
 .footer {
-    position: fixed;
+    position: absolute;
     /* top: 90vh; */
     bottom: 0;
     left: 0;
