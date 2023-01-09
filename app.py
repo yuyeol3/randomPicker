@@ -3,8 +3,9 @@ from flask import Flask, render_template, url_for, request, redirect
 app = Flask(__name__)
 
 @app.route("/")
-def main_page():
-    return render_template("index.html")
+@app.route("/names=<string:names>&roles=<string:roles>")
+def main_page(names="", roles=""):
+    return render_template("index.html", names=names, roles=roles)
 
 
 if __name__ == "__main__":
