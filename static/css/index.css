@@ -72,7 +72,7 @@ p {
 
 #name_div, #role_div {
     width: 85%;
-    height: 45%;
+    height: 40%;
     margin: 0 auto;
 }
 
@@ -92,12 +92,16 @@ p {
     overflow-y: scroll;
 }
 
+.add_form {
+    width: 86%;
+    display: inline-block;
+}
 
 .add_input {
     border-radius: 10vw;
     border-width: 0;
     background-color: hsl(0, 0%, 93%);
-    width: 86%;
+    width: 100%;
     height: 40px;
     margin: 0; padding: 0;
 }
@@ -198,7 +202,7 @@ p {
     #name_div, #role_div {
         float: left;
         width: 40%;
-        height: 90%;
+        height: 80%;
         margin: 0 5% 0 5%;
     }
 

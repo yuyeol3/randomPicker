@@ -194,7 +194,7 @@ function showResult() {
 
     </script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-    <title>뽑기</title>
+    <title>청소분담제 역할배정(β)</title>
 </head>
 <body>
     <!-- 메인 페이지 -->
@@ -205,13 +205,17 @@ function showResult() {
         <div id="main" class="main">
             <div id="name_div">
                 <h3>이름</h3>
-                <input class="add_input" onkeypress="if(window.event.keyCode == 13){ add_name() }">
+                <form onsubmit="return false;" class="add_form">
+                    <input class="add_input" onkeypress="if(window.event.keyCode == 13){ add_name() }">
+                </form>
                 <button class="add_button" id="add" onclick="add_name()">+</button>
                 <div id="elements_list" class="elements_list"></div>
             </div>
             <div id="role_div">
                 <h3>역할</h3>
-                <input class="add_input" onkeypress="if(window.event.keyCode == 13){ add_role() }">
+                <form onsubmit="return false;" class="add_form">
+                    <input class="add_input" onkeypress="if(window.event.keyCode == 13){ add_role() }">
+                </form>
                 <button class="add_button" id="add" onclick="add_role()">+</button>
                 <div id="elements_list" class="elements_list"></div>
             </div>
