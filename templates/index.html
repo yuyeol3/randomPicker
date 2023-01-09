@@ -159,24 +159,31 @@ var isMainPage = true;
 
 
 function changePage() {
+    var pages = $(".page_div")
+
     if (isMainPage) {
         // 메인페이지 > 결과페이지
+        $("body #result").insertAfter("body #home");
         showResult();
-        $("#home").attr("style", "display: none");
-        $("#result").attr("style", "")
+        $("#home").attr("style", "opacity: 0;");
+        $("#result").attr("style", "opacity: 100;");
+        // setTimeout(() => {$("#home").attr("style", "display: none;")}, 700);
+
     } else {
         // 결과페이지 > 메인페이지
-        $("#result_table").html("")
-        $("#home").attr("style", "");
-        $("#result").attr("style", "display: none")
+        $("#result_table").html("");
+        $("body #home").insertAfter("body #result");
+        $("#result").attr("style", "opacity: 0;");
+        $("#home").attr("style", "opacity: 100");
+        // setTimeout(() => {$("#result").attr("style", "display: none;")}, 700);
     }
 
     isMainPage = !isMainPage;
 }
 
+
 function showResult() {
     var res = assign_roles(names.getElements(), roles.getElements());
-    console.log(res.size);
     const tableGenerator = new HtmlElementGenerator(
         '<tr>' +
             '<td class="res_name">㏅ {0}</td>' +
@@ -197,6 +204,24 @@ function showResult() {
     <title>청소분담제 역할배정(β)</title>
 </head>
 <body>
+    <!-- 결과 페이지 -->
+    <div id="result" class="page_div" style="opacity: 0;">
+        <div id="header" class="header">
+            <h1>㏊ 결과를 확인하세요</h1>
+        </div>
+        <div id="main" class="main">
+            <div id="result_div">
+                <h2>결과</h2>
+                <table id="result_table"></table>
+            </div>
+        </div>
+        <div id="footer" class="footer">
+            <div id="buttons_div" class="buttons_div">
+                <button class="action_button _full" onclick="changePage()">다시하기</button>
+                <!-- <button class="action_button _right" >공유</button> -->
+            </div>
+        </div>
+    </div>
     <!-- 메인 페이지 -->
     <div id="home" class="page_div">
         <div id="header" class="header">
@@ -223,24 +248,6 @@ function showResult() {
         <div id="footer" class="footer">
             <div id="buttons_div" class="buttons_div">
                 <button class="action_button _left" onclick="resetAll()">㎱ 초기화</button><button class="action_button _right" onclick="changePage()">다음</button>
-            </div>
-        </div>
-    </div>
-    <!-- 결과 페이지 -->
-    <div id="result" class="page_div" style="display: none;">
-        <div id="header" class="header">
-            <h1>㏊ 결과를 확인하세요</h1>
-        </div>
-        <div id="main" class="main">
-            <div id="result_div">
-                <h2>결과</h2>
-                <table id="result_table"></table>
-            </div>
-        </div>
-        <div id="footer" class="footer">
-            <div id="buttons_div" class="buttons_div">
-                <button class="action_button _full" onclick="changePage()">다시하기</button>
-                <!-- <button class="action_button _right" >공유</button> -->
             </div>
         </div>
     </div>
