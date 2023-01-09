@@ -152,6 +152,19 @@ function changePage() {
     var pages = $(".page_div")
 
     if (isMainPage) {
+        // 통과조건
+        if (names.elements.length === 0 || roles.elements.length === 0)
+        {
+            alert("입력하지 않은 항목이 있습니다.");
+            return;
+        }
+
+        if (names.elements.length != roles.elements.length) {
+            alert("이름과 역할의 개수가 일치하지 않습니다.");
+            return;
+        }
+
+
         // 메인페이지 > 결과페이지
         $("body #result").insertAfter("body #home");
         showResult();
