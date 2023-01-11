@@ -53,7 +53,7 @@ p {
     margin: 0;
     padding: 0;
     width: 100vw;
-    height: 80vh;
+    height: calc(100vh - 10vh - 60px);
 }
 
 .footer {
@@ -75,7 +75,7 @@ p {
 
 #name_div, #role_div {
     width: 85%;
-    height: 40%;
+    height: 45%;
     margin: 0 auto;
 
 }
@@ -206,7 +206,7 @@ p {
     #name_div, #role_div {
         float: left;
         width: 40%;
-        height: 80%;
+        height: 90%;
         margin: 0 5% 0 5%;
     }
 
