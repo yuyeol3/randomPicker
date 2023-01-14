@@ -1,4 +1,9 @@
 
+/**
+ * 지정한 html selector에 html content를 추가하는 함수
+ * @param {string} selector html content를 추가할 selector 
+ * @param {string} html_content 추가할 html content
+ */
 // 지정한 html selector에 html content를 추가하는 함수
 function add_element(selector, html_content)
 {
@@ -6,16 +11,24 @@ function add_element(selector, html_content)
     $(selector).html(prev_content + html_content);
 }
 
-
-// Html 요소 생성을 도와주는 클래스
+/**
+ * Html 요소 생성을 도와주는 클래스
+ */
 class HtmlElementGenerator {
-    // htmlBase에는 기초가 될 html 코드를 작성합니다.
+    /**
+     * HtmlElementGenerator 생성자
+     * @param {string} htmlBase 기초가 될 Html 템플릿 
+     */
     constructor (htmlBase) {
         this.htmlBase = htmlBase;
         this.baseArgs = [];
     } 
 
-    // 입력한 htmlBase에 baseArgs를 포매팅해 리턴하는 메소드
+    /**
+     * 입력한 htmlBase에 baseArgs를 포메팅해 리턴하는 메소드
+     * @param {Array} baseArgs htmlBase에 포메팅할 요소들을 Array형식으로 넣음
+     * @returns baseArgs가 비었으면 아무것도 리턴하지 않고, 그렇지 않으면 포메팅한 문자열을 리턴
+     */
     getHtmlCode(baseArgs) {
         if (baseArgs === []) {
             return;
@@ -30,25 +43,47 @@ class HtmlElementGenerator {
     }
 }
 
+/**
+ * Array처럼 값을 저장하면서 render 메소드를 통해 정해진 형태로 html 요소를 추가할 수 있는 클래스
+ */
 class ElementList {
+    /**
+     * ElementList 생성자
+     * @param {string} selector 만들어진 html 요소를 추가할 selector
+     * @param {HtmlElementGenerator} generator 리스트의 요소를 html로 바꾸기 위한 html요소 생성기
+     */
     constructor (selector, generator) {
         this.selector = selector;
         this.elements = [];
         this.generator = generator;
     }
 
+    /**
+     * ElementList에 요소를 추가하는 메소드
+     * @param {string} to_add 리스트에 추가할 요소
+     */
     push (to_add) {
         this.elements.push(to_add);
     }
 
+    /**
+     * ElementList에서 특정 요소를 삭제하는 메소드
+     * @param {number} index 
+     */
     remove (index) {
         this.elements.splice(index, 1);
     }
 
+    /**
+     * ElementList에서 특정 요소를 삭제하는 메소드
+     */
     removeAll () {
         this.elements = [];
     }
 
+    /**
+     * ElementList의 모든 요소를 html element로 바꾸어 지정된 selector에 추가하는 메소드
+     */
     render () {
         $(this.selector).html("");
 
@@ -58,18 +93,32 @@ class ElementList {
         });
     }
 
+    /**
+     * ElementList의 모든 요소를 Array 형식으로 반환하는 메소드
+     * @returns ElementList의 모든 요소
+     */
     getElements () {
         return this.elements;
     }
 
 }
 
-// [min, max]의 범위에서 무작위한 수를 리턴하는 함수
+/**
+ * [min, max]의 범위에서 무작위한 수를 리턴하는 함수
+ * @param {number} min 범위의 최소값 
+ * @param {number} max 범위의 최대값
+ * @returns 범위 사이의 무작위한 수
+ */
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// roles를 무작위로 names에 할당하는 함수
+/**
+ * roles를 무작위로 names에 할당하는 함수
+ * @param {Array} names 원소가 문자열로 된 이름인 배열
+ * @param {Array} roles 원소가 문자열로 된 역할인 배열
+ * @returns 무작위로 할당한 결과
+ */
 function assign_roles(names, roles)
 {
     
@@ -98,13 +147,25 @@ function assign_roles(names, roles)
 }
 
 
-
+/**
+ * 이름 htmlElement생성기
+ */
 const nameElementGenerator = new HtmlElementGenerator(
     '<div class="element" id="{0}">' + 
         '<p class="element_text">㏅ {1}</p><button class="element_button" onclick="(() => {names.remove({2}); names.render();})()">×</button>' + 
     '</div>'
 );
+
+/**
+ * 이름 ElementList
+ */
 const names = new ElementList("#home #main #name_div #elements_list", nameElementGenerator);
+
+/**
+ * 메인 페이지에 이름을 추가해주는 함수
+ * input에 문자열이 없으면 동작하지 않고,
+ * 문자열이 있으면 names에 요소를 추가 후 div에 이름들을 render
+ */
 function add_name() {
     var to_add = $("#home #main #name_div input").val();
 
@@ -117,13 +178,24 @@ function add_name() {
 
 }
 
+/**
+ * 역할 htmlElement생성기
+ */
 const roleElementGenerator = new HtmlElementGenerator(
     '<div class="element" id="{0}">' + 
         '<p class="element_text">⒡ {1}</p><button class="element_button" onclick="(() => {roles.remove({2}); roles.render();})()">×</button>' + 
     '</div>'
 );
 
+/**
+ * 역할 ElementList
+ */
 const roles = new ElementList("#home #main #role_div #elements_list", roleElementGenerator);
+/**
+ * 메인 페이지에 역할을 추가해주는 함수
+ * input에 문자열이 없으면 동작하지 않고,
+ * 문자열이 있으면 roles에 요소를 추가 후 div에 역할들을 render
+ */
 function add_role() {
     var to_add = $("#home #main #role_div input").val();
 
@@ -136,6 +208,9 @@ function add_role() {
     $("#home #main #role_div input").val("");
 }
 
+/**
+ * 메인 페이지를 초기화하는 함수
+ */
 function resetAll() {
     names.removeAll();
     roles.removeAll();
@@ -145,9 +220,15 @@ function resetAll() {
     roles.render();
 }
 
+/**
+ * 현재 페이지의 위치를 나타내는 변수
+ * 메인 페이지이면 true, 결과 페이지이면 false
+ */
 var isMainPage = true;
 
-
+/**
+ * 페이지를 변경하는 함수
+ */
 function changePage() {
     var pages = $(".page_div")
 
@@ -182,7 +263,9 @@ function changePage() {
     isMainPage = !isMainPage;
 }
 
-
+/**
+ * 결과 페이지에 역할 배정 결과를 출력하는 함수
+ */
 function showResult() {
     var res = assign_roles(names.getElements(), roles.getElements());
     const tableGenerator = new HtmlElementGenerator(
@@ -198,8 +281,6 @@ function showResult() {
         add_element("#result_table", tableGenerator.getHtmlCode([key, val]));
     });
 }
-
-
 
 
 // url에 데이터가 미리 입력된 경우 처리
