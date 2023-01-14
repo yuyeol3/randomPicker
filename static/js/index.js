@@ -143,6 +143,8 @@ function assign_roles(names, roles)
         result.set(names[i], shuffled[i]);
     }
 
+
+
     return result;
 }
 
@@ -162,7 +164,7 @@ const nameElementGenerator = new HtmlElementGenerator(
 const names = new ElementList("#home #main #name_div #elements_list", nameElementGenerator);
 
 /**
- * 메인 페이지에 이름을 추가해주는 함수
+ * 메인 페이지에 이름을 추가해주는 함수.
  * input에 문자열이 없으면 동작하지 않고,
  * 문자열이 있으면 names에 요소를 추가 후 div에 이름들을 render
  */
@@ -192,9 +194,9 @@ const roleElementGenerator = new HtmlElementGenerator(
  */
 const roles = new ElementList("#home #main #role_div #elements_list", roleElementGenerator);
 /**
- * 메인 페이지에 역할을 추가해주는 함수
+ * 메인 페이지에 역할을 추가해주는 함수.
  * input에 문자열이 없으면 동작하지 않고,
- * 문자열이 있으면 roles에 요소를 추가 후 div에 역할들을 render
+ * 문자열이 있으면 roles에 요소를 추가 후 div에 역할들을 render.
  */
 function add_role() {
     var to_add = $("#home #main #role_div input").val();
@@ -221,7 +223,7 @@ function resetAll() {
 }
 
 /**
- * 현재 페이지의 위치를 나타내는 변수
+ * 현재 페이지의 위치를 나타내는 변수.
  * 메인 페이지이면 true, 결과 페이지이면 false
  */
 var isMainPage = true;
@@ -267,7 +269,15 @@ function changePage() {
  * 결과 페이지에 역할 배정 결과를 출력하는 함수
  */
 function showResult() {
+    // 역할 할당하기
     var res = assign_roles(names.getElements(), roles.getElements());
+    var res_arr = [];
+    res.forEach((val, key) => { 
+        res_arr.push([val, key])
+    });
+
+    res_arr.sort()
+
     const tableGenerator = new HtmlElementGenerator(
         '<tr>' +
             '<td class="res_name">㏅ {0}</td>' +
@@ -277,8 +287,8 @@ function showResult() {
     );
 
 
-    res.forEach((val, key) => {
-        add_element("#result_table", tableGenerator.getHtmlCode([key, val]));
+    res_arr.forEach((val, idx) => {
+        add_element("#result_table", tableGenerator.getHtmlCode([val[1], val[0]]));
     });
 }
 
