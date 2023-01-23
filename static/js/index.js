@@ -7,7 +7,7 @@
 // 지정한 html selector에 html content를 추가하는 함수
 function add_element(selector, html_content)
 {
-    var prev_content = $(selector).html();
+    let prev_content = $(selector).html();
     $(selector).html(prev_content + html_content);
 }
 
@@ -34,7 +34,7 @@ class HtmlElementGenerator {
             return;
         }
         
-        var to_return = this.htmlBase
+        let to_return = this.htmlBase
         baseArgs.forEach((element, idx) => {
             to_return = to_return.replace("{" + idx + "}", String(element));
         });
@@ -88,7 +88,7 @@ class ElementList {
         $(this.selector).html("");
 
         this.elements.forEach((e, i) => {
-            var htmlCode = this.generator.getHtmlCode([i, e, i]);
+            let htmlCode = this.generator.getHtmlCode([i, e, i]);
             add_element(this.selector, htmlCode);
         });
     }
@@ -122,12 +122,12 @@ function random(min, max) {
 function assign_roles(names, roles)
 {
     
-    var used_idx = [];
-    var shuffled = [];
-    var result = new Map();
+    let used_idx = [];
+    let shuffled = [];
+    let result = new Map();
 
-    for (var i = 0; i < names.length; i++) {
-        var idx = random(0, roles.length - 1);
+    for (let i = 0; i < names.length; i++) {
+        let idx = random(0, roles.length - 1);
         
         while (used_idx.includes(idx))
         {
@@ -138,7 +138,7 @@ function assign_roles(names, roles)
         used_idx.push(idx);
     }
 
-    for (var i = 0; i < names.length; i++)
+    for (let i = 0; i < names.length; i++)
     {
         result.set(names[i], shuffled[i]);
     }
@@ -169,7 +169,7 @@ const names = new ElementList("#home #main #name_div #elements_list", nameElemen
  * 문자열이 있으면 names에 요소를 추가 후 div에 이름들을 render
  */
 function add_name() {
-    var to_add = $("#home #main #name_div input").val();
+    let to_add = String( $("#home #main #name_div input").val() );
 
     if (to_add === '') {
         return;
@@ -199,7 +199,7 @@ const roles = new ElementList("#home #main #role_div #elements_list", roleElemen
  * 문자열이 있으면 roles에 요소를 추가 후 div에 역할들을 render.
  */
 function add_role() {
-    var to_add = $("#home #main #role_div input").val();
+    let to_add = String( $("#home #main #role_div input").val() );
 
     if (to_add === '') {
         return;
@@ -226,13 +226,13 @@ function resetAll() {
  * 현재 페이지의 위치를 나타내는 변수.
  * 메인 페이지이면 true, 결과 페이지이면 false
  */
-var isMainPage = true;
+let isMainPage = true;
 
 /**
  * 페이지를 변경하는 함수
  */
 function changePage() {
-    var pages = $(".page_div")
+    let pages = $(".page_div")
 
     if (isMainPage) {
         // 통과조건
@@ -270,8 +270,8 @@ function changePage() {
  */
 function showResult() {
     // 역할 할당하기
-    var res = assign_roles(names.getElements(), roles.getElements());
-    var res_arr = [];
+    let res = assign_roles(names.getElements(), roles.getElements());
+    let res_arr = [];
     res.forEach((val, key) => { 
         res_arr.push([val, key])
     });
