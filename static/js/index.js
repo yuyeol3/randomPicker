@@ -196,36 +196,55 @@ const roleElementGenerator = new HtmlElementGenerator(
 const roles = new ElementList("#home #main #role_div #elements_list", roleElementGenerator);
 
 roles.autoFillRoles = (nameNum) => {
+    if (nameNum < 1) {
+        alert('이름을 한 개 이상 입력하세요.');
+        return;
+    }
+
 
     if (nameNum === 1) {
         roles.elements.push("폰생쓰차");
-        return;
-    }
-
-    if (nameNum === 2) {
+    } else if (nameNum === 2) {
         roles.elements.push("폰생쓰");
         roles.elements.push("차");
-        return;
-    }
-    
-    roles.elements.push("폰생");
-    roles.elements.push("쓰");
+    } else {    
+        roles.elements.push("폰생");
+        roles.elements.push("쓰");
 
-    let chachulNum = nameNum / 3;
-    chachulNum = Math.ceil(chachulNum);
-    
-    for (let i = 0; i < chachulNum; i++) {
-        roles.elements.push("차출");
-    }
+        let chachulNum = nameNum / 3;
+        chachulNum = Math.ceil(chachulNum);
+        
+        for (let i = 0; i < chachulNum; i++) {
+            roles.elements.push("차출");
+        }
 
-    let left = nameNum - (chachulNum + 2);
+        let left = nameNum - (chachulNum + 2);
 
-    for (let i = 0; i < left; i++) {
-        roles.elements.push("통과");
+        for (let i = 0; i < left; i++) {
+            roles.elements.push("통과");
+        }
     }
 
     roles.render();
 } 
+
+
+
+roles.render = () => {
+    $(roles.selector).html("");
+
+    roles.elements.forEach((e, i) => {
+        let htmlCode = roles.generator.getHtmlCode([i, e, i]);
+        add_element(roles.selector, htmlCode);
+    });
+
+    if (roles.elements.length == 0) {
+    add_element("#home #main #role_div #elements_list", 
+                '<button class="action_button" id="auto-fill" onclick="roles.autoFillRoles(names.elements.length)">' +
+                '자동완성</button>');
+    }
+
+}
 
 
 /**
@@ -253,7 +272,7 @@ function resetAll() {
     roles.removeAll();
     $("#home #main #name_div input").val("");
     $("#home #main #role_div input").val("");
-    '<button class="action_button">자동완성</button>'
+    
     names.render();
     roles.render();
 }
