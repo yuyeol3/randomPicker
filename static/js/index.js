@@ -163,6 +163,7 @@ const nameElementGenerator = new HtmlElementGenerator(
  */
 const names = new ElementList("#home #main #name_div #elements_list", nameElementGenerator);
 
+
 /**
  * 메인 페이지에 이름을 추가해주는 함수.
  * input에 문자열이 없으면 동작하지 않고,
@@ -193,6 +194,40 @@ const roleElementGenerator = new HtmlElementGenerator(
  * 역할 ElementList
  */
 const roles = new ElementList("#home #main #role_div #elements_list", roleElementGenerator);
+
+roles.autoFillRoles = (nameNum) => {
+
+    if (nameNum === 1) {
+        roles.elements.push("폰생쓰차");
+        return;
+    }
+
+    if (nameNum === 2) {
+        roles.elements.push("폰생쓰");
+        roles.elements.push("차");
+        return;
+    }
+    
+    roles.elements.push("폰생");
+    roles.elements.push("쓰");
+
+    let chachulNum = nameNum / 3;
+    chachulNum = Math.ceil(chachulNum);
+    
+    for (let i = 0; i < chachulNum; i++) {
+        roles.elements.push("차출");
+    }
+
+    let left = nameNum - (chachulNum + 2);
+
+    for (let i = 0; i < left; i++) {
+        roles.elements.push("통과");
+    }
+
+    roles.render();
+} 
+
+
 /**
  * 메인 페이지에 역할을 추가해주는 함수.
  * input에 문자열이 없으면 동작하지 않고,
@@ -218,6 +253,7 @@ function resetAll() {
     roles.removeAll();
     $("#home #main #name_div input").val("");
     $("#home #main #role_div input").val("");
+    '<button class="action_button">자동완성</button>'
     names.render();
     roles.render();
 }
@@ -303,3 +339,4 @@ if ($("#names").val() != "" && $("#roles").val() != "") {
     names.render();
     roles.render();
 }
+
