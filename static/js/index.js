@@ -349,13 +349,16 @@ function showResult() {
 
 
 // url에 데이터가 미리 입력된 경우 처리
-if ($("#names").val() != "" && $("#roles").val() != "") {
-    
-    const name_arg = String($("#names").val());
-    const role_arg = String($("#roles").val()); 
+if ($("#names").val() != "") {
+    const name_arg = String($("#names").val()); 
     names.elements = name_arg.split(",");
-    roles.elements = role_arg.split(",");
     names.render();
-    roles.render();
+}
+
+if ($("#roles").val() != "") {
+    const role_arg = String($("#roles").val()); 
+    roles.elements = role_arg.split(",");
+    roles.render();    
+
 }
 
