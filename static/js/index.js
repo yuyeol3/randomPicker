@@ -202,7 +202,7 @@ roles.autoFillRoles = (nameNum) => {
     }
 
     // 폰생쓰 허용여부 확인
-    let pss_allowed = $("#phonesangssu-allowed").val()
+    let pss_allowed = document.querySelector("#phonesangssu-allowed").checked
 
     if (nameNum === 1) {
         roles.elements.push("폰생쓰차");
@@ -211,7 +211,7 @@ roles.autoFillRoles = (nameNum) => {
         roles.elements.push("차");
     } else {
 
-        if (pss_allowed === "on")
+        if (pss_allowed)
         {
             roles.elements.push("폰생쓰");
         }
