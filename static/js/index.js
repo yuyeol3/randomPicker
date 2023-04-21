@@ -201,16 +201,25 @@ roles.autoFillRoles = (nameNum) => {
         return;
     }
 
+    // 폰생쓰 허용여부 확인
+    let pss_allowed = $("#phonesangssu-allowed").val()
 
     if (nameNum === 1) {
         roles.elements.push("폰생쓰차");
     } else if (nameNum === 2) {
         roles.elements.push("폰생쓰");
         roles.elements.push("차");
-    } else {    
-        roles.elements.push("폰생");
-        roles.elements.push("쓰");
+    } else {
 
+        if (pss_allowed)
+        {
+            roles.elements.push("폰생쓰");
+        }
+        else
+        {
+            roles.elements.push("폰생");
+            roles.elements.push("쓰");
+        }
         let chachulNum = nameNum / 3;
         chachulNum = Math.ceil(chachulNum);
         
@@ -218,7 +227,7 @@ roles.autoFillRoles = (nameNum) => {
             roles.elements.push("차출");
         }
 
-        let left = nameNum - (chachulNum + 2);
+        let left = nameNum - (chachulNum + (roles.getElements().length - chachulNum));
 
         for (let i = 0; i < left; i++) {
             roles.elements.push("통과");
@@ -241,7 +250,8 @@ roles.render = () => {
     if (roles.elements.length == 0) {
     add_element("#home #main #role_div #elements_list", 
                 '<button class="action_button" id="auto-fill" onclick="roles.autoFillRoles(names.elements.length)">' +
-                '자동완성</button>');
+                '자동완성</button>' +
+                '<input type="checkbox" id="phonesangssu-allowed" checked><label for="phonesangssu-allowed">폰생쓰 허용</label>');
     }
 
 }
@@ -361,4 +371,3 @@ if ($("#roles").val() != "") {
     roles.render();    
 
 }
-
