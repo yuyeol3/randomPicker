@@ -211,7 +211,7 @@ roles.autoFillRoles = (nameNum) => {
         roles.elements.push("차");
     } else {
 
-        if (pss_allowed)
+        if (pss_allowed === "on")
         {
             roles.elements.push("폰생쓰");
         }
